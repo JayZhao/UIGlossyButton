@@ -216,9 +216,12 @@ static void RetinaAwareUIGraphicsBeginImageContext(CGSize size) {
 	CGContextRestoreGState(ref);
 	
 	if (drawOnImage) {
-		UIImage *i = UIGraphicsGetImageFromCurrentImageContext();
+        UIImage* renderedImage;
+        @autoreleasepool {
+            renderedImage = UIGraphicsGetImageFromCurrentImageContext();
+        }
 		UIGraphicsEndImageContext();
-		[i drawAtPoint:CGPointZero blendMode:kCGBlendModeNormal alpha:_backgroundOpacity];
+		[renderedImage drawAtPoint:CGPointZero blendMode:kCGBlendModeNormal alpha:_backgroundOpacity];
 	}
 	
     [super drawRect: rect];
